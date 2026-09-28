@@ -1,7 +1,7 @@
 # Laboratorio 1 — Bitácora de auditoría de la cadena de suministro
 
 - **Autor/a:** ESCRIBE_AQUÍ_TU_NOMBRE_Y_APELLIDOS
-- **Repositorio:** https://github.com/TU-USUARIO/reportaudit-lab
+- **Repositorio:** https://github.com/Carlos-Belando/reportaudit-lab
 - **Sistema operativo y versión de Python usados:**
 
 > Completa cada sección en el momento en que la guía te lo pide, no al final.
