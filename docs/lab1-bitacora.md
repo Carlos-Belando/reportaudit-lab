@@ -1,6 +1,6 @@
 # Laboratorio 1 — Bitácora de auditoría de la cadena de suministro
 
-- **Autor/a:** ESCRIBE_AQUÍ_TU_NOMBRE_Y_APELLIDOS
+- **Autor/a:** Carlos Belando Sánchez
 - **Repositorio:** https://github.com/Carlos-Belando/reportaudit-lab
 - **Sistema operativo y versión de Python usados:**
 
@@ -13,17 +13,17 @@
 
 | # | Función | Línea | Qué sospechas | Dato de entrada (*source*) | Destino peligroso (*sink*) |
 |---|---|---|---|---|---|
-| 1 |  |  |  |  |  |
-| 2 |  |  |  |  |  |
-| 3 |  |  |  |  |  |
-| 4 |  |  |  |  |  |
-| 5 |  |  |  |  |  |
+| 1 | buscar_reportes_cliente | 41 | inyección SQL, la query se arma pegando texto en vez de parametrizar | nombre_cliente | cursor.execute(query) |
+| 2 | convertir_a_pdf | 49-50 | inyección de comandos | nombre_archivo  | os.system(comando) |
+| 3 | cargar_configuracion | 33 | YAML inseguro, el Loader completo puede ejecutar código arbitrario | config.yaml | yaml.load(..., Loader=yaml.Loader) |
+| 4 | hash_password_legacy | 57 | hash débil (MD5, sin salt), fácil de romper | password  | hashlib.md5(password.encode()) |
+| 5 | Ninguna | 20-22 | credenciales reales escritas directamente en el código | N/A | N/A |
 
 **Impacto en el negocio:** para cada sospecha, explica en una frase qué
 consecuencia tendría para ReportAudit y sus clientes si fuera real (qué datos,
 qué sistema o qué credencial quedarían expuestos).
 
----
+---  SQLi = "un atacante ve o borra reportes de cualquier cliente"; inyección de comandos = "control total del servidor"; YAML inseguro = "ejecución de código si se manipula la configuración"; hash débil = "contraseñas fáciles de descifrar si se filtra la BD"; secretos expuestos = "cualquiera con el repo puede suplantar el servicio de notificaciones".
 
 ## Matriz de detección (se completa a lo largo del laboratorio)
 
