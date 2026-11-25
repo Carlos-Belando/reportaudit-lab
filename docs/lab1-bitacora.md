@@ -97,3 +97,20 @@ justificación.
 10.
 11.
 12.
+
+## Backlog del laboratorio (Issues)
+
+| Issue | Título | PR o evidencia de cierre |
+|---|---|---|
+| #2 | Adopt an international pull request template | |
+| #3 | Run SAST (SonarQube Cloud and CodeQL) on every pull request | |
+| #4 | Block insecure commits with a Semgrep pre-commit hook | |
+| #5 | Enable Dependabot alerts and security updates | |
+| #6 | Remediate the findings of the security audit | |
+| #7 | Upgrade the vulnerable dependencies | |
+| #8 | Publish the audit log and the before/after evidence | |
+| #9 | Detect ReportAudit credentials in the whole Git history | |
+| #10 | Make SCA and secret scanning required checks on main | |
+| #11 | Publish a security policy and a private vulnerability reporting channel | |
+| #12 | Release v1.0.0 with an SBOM and signed provenance | |
+| #13 | Measure supply-chain maturity with OpenSSF Scorecard | |
