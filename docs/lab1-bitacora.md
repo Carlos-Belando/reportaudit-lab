@@ -114,3 +114,9 @@ justificación.
 | #11 | Publish a security policy and a private vulnerability reporting channel | |
 | #12 | Release v1.0.0 with an SBOM and signed provenance | |
 | #13 | Measure supply-chain maturity with OpenSSF Scorecard | |
+
+## Parte H: Bloqueo preventivo con Semgrep en pre-commit (Issue #4)
+
+- **Configuración:** `.pre-commit-config.yaml` con `pre-commit-hooks` (`v5.0.0`) y un hook local `semgrep-security` (`semgrep scan --config p/python --config p/secrets --error`).
+- **Prueba de bloqueo:** Se intentó commitear un fichero temporal (`app/prueba_insegura.py`) con `subprocess.call(cmd, shell=True)`. El hook bloqueó el commit (`exit code: 1`) mediante la regla `python.lang.security.audit.subprocess-shell-true.subprocess-shell-true`.
+- **Evidencia:** `docs/evidencias/semgrep-precommit-bloqueo.txt`.

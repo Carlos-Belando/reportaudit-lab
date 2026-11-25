@@ -1,0 +1,50 @@
+[INFO] Initializing environment for https://github.com/pre-commit/pre-commit-hooks.
+[INFO] Installing environment for https://github.com/pre-commit/pre-commit-hooks.
+[INFO] Once installed this environment will be reused.
+[INFO] This may take a few minutes...
+trim trailing whitespace.................................................Passed
+fix end of files.........................................................Passed
+check yaml...........................................(no files to check)Skipped
+check for added large files..............................................Passed
+Semgrep SAST & Secrets Gate..............................................Failed
+- hook id: semgrep-security
+- exit code: 1
+
+┌─────────────┐
+│ Scan Status │
+└─────────────┘
+  Scanning 1 file tracked by git with 202 Code rules:
+
+  Language      Rules   Files          Origin      Rules
+ ─────────────────────────────        ───────────────────
+  python          151       1          Community     202
+  <multilang>      36       1
+
+
+
+┌──────────────┐
+│ Scan Summary │
+└──────────────┘
+✅ Scan completed successfully.
+ • Findings: 1 (1 blocking)
+ • Rules run: 187
+ • Targets scanned: 1
+ • Parsed lines: ~100.0%
+ • No ignore information available
+Ran 187 rules on 1 file: 1 finding.
+
+
+┌────────────────┐
+│ 1 Code Finding │
+└────────────────┘
+
+    app/prueba_insegura.py
+   ❯❯❱ python.lang.security.audit.subprocess-shell-true.subprocess-shell-true
+          ❰❰ Blocking ❱❱
+          Found 'subprocess' function 'call' with 'shell=True'. This is dangerous because this call will spawn
+          the command using a shell process. Doing so propagates current shell settings and variables, which
+          makes it much easier for a malicious actor to execute commands. Use 'shell=False' instead.
+          Details: https://sg.run/J92w
+
+           ▶▶┆ Autofix ▶ False
+            3┆ subprocess.call(cmd, shell=True)
