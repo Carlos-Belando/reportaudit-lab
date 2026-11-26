@@ -34,7 +34,7 @@ jobs:
           subject-path: "sbom-cyclonedx.json"
 
       - name: Crear GitHub Release y adjuntar SBOM
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           files: sbom-cyclonedx.json
           generate_release_notes: true
