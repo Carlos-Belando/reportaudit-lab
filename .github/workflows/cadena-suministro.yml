@@ -78,3 +78,20 @@ jobs:
 
       - name: Escanear secretos en todo el historial Git
         run: gitleaks detect --source . --log-opts="--all" --verbose
+
+  sca:
+    name: SCA - Dependency Audit (pip-audit)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar el código
+        uses: actions/checkout@v7
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Auditar vulnerabilidades en dependencias con pip-audit
+        run: |
+          python -m pip install pip-audit
+          pip-audit -r requirements.txt --strict
