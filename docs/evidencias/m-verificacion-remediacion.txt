@@ -1,0 +1,5 @@
+1. Normal (acme_corp): {'cliente_solicitado': 'acme_corp', 'reportes': [{'cliente': 'acme_corp', 'id': 1, 'monto': 1500.0}, {'cliente': 'acme_corp', 'id': 2, 'monto': 2300.0}], 'total_registros': 2}
+2. Apostrofo (obrien): {'cliente_solicitado': "o'brien_ltd", 'reportes': [{'cliente': "o'brien_ltd", 'id': 5, 'monto': 700.0}], 'total_registros': 1}
+3. SQLi intento: {'cliente_solicitado': "' OR 1=1 --", 'reportes': [], 'total_registros': 0}
+4. CMDi intento: 400 {'error': 'Nombre de archivo no válido'}
+5. Archivo valido: 200 {'archivo_pdf': 'reporte_01.html.pdf'}
