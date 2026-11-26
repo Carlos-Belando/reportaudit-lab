@@ -29,7 +29,7 @@ jobs:
           cyclonedx-py requirements requirements.txt --output-format JSON -o sbom-cyclonedx.json
 
       - name: Generar atestación firmada de procedencia (SLSA / GitHub Attestations)
-        uses: actions/attest-build-provenance@v2
+        uses: actions/attest-build-provenance@v4
         with:
           subject-path: "sbom-cyclonedx.json"
 
