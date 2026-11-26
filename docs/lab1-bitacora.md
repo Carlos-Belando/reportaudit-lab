@@ -135,3 +135,9 @@ justificación.
 - **Inyección de comandos (`convertir_a_pdf`):** Validación estricta por expresión regular (`^[a-zA-Z0-9_-]+\.html$`) lanzando `ValueError` ante caracteres no permitidos y ejecución directa con `subprocess.run(..., shell=False)` sin invocación de shell.
 - **Algoritmo criptográfico débil (`hash_password_legacy`):** Migración de MD5 sin sal a `hashlib.pbkdf2_hmac("sha256", ..., 600_000)` con sal aleatoria de 16 bytes.
 - **Evidencia de verificación:** `docs/evidencias/m-verificacion-remediacion.txt`.
+
+## Parte O — Detección de secretos en el historial Git con Gitleaks (Issue #9)
+- Escaneo completo del historial (`gitleaks detect --log-opts="--all"`) ejecutado sobre los 15 commits del repositorio (`docs/evidencias/o-gitleaks-history.json`).
+- **Hallazgo histórico:** `generic-api-key` (`NOTIFICATION_API_KEY`) en `app/reporte_auditoria.py:21` del commit inicial `8fa42f99`.
+- **Estado actual (`HEAD`):** `0` secretos presentes (`gitleaks detect --no-git` limpio tras la remediación en `fd5985d`).
+- **Decisión de respuesta:** Se aplica rotación/revocación de la credencial comprometida en lugar de reescribir el historial público ya auditado, registrando su *fingerprint* en `.gitleaksignore` y añadiendo `gitleaks/gitleaks-action@v2` con `fetch-depth: 0` en `.github/workflows/cadena-suministro.yml` para bloquear cualquier futura exposición en PRs o commits.

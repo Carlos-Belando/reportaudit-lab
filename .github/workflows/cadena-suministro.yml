@@ -59,3 +59,22 @@ jobs:
         uses: github/codeql-action/analyze@v4
         with:
           category: "/language:python"
+
+  gitleaks:
+    name: Secrets Scan - Gitleaks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar el código con todo su historial
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Instalar Gitleaks CLI
+        run: |
+          GITLEAKS_VER="8.24.2"
+          curl -sSfL "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VER}/gitleaks_${GITLEAKS_VER}_linux_x64.tar.gz" -o /tmp/gitleaks.tar.gz
+          tar -xzf /tmp/gitleaks.tar.gz -C /tmp gitleaks
+          sudo mv /tmp/gitleaks /usr/local/bin/gitleaks
+
+      - name: Escanear secretos en todo el historial Git
+        run: gitleaks detect --source . --log-opts="--all" --verbose
