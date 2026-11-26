@@ -120,3 +120,18 @@ justificación.
 - **Configuración:** `.pre-commit-config.yaml` con `pre-commit-hooks` (`v5.0.0`) y un hook local `semgrep-security` (`semgrep scan --config p/python --config p/secrets --error`).
 - **Prueba de bloqueo:** Se intentó commitear un fichero temporal (`app/prueba_insegura.py`) con `subprocess.call(cmd, shell=True)`. El hook bloqueó el commit (`exit code: 1`) mediante la regla `python.lang.security.audit.subprocess-shell-true.subprocess-shell-true`.
 - **Evidencia:** `docs/evidencias/semgrep-precommit-bloqueo.txt`.
+
+## Parte I: Configuración de Dependabot (Issue #5)
+
+- **Configuración:** Se activaron *Dependency graph*, *Dependabot alerts* y *Dependabot security updates* en el repositorio y se añadió `.github/dependabot.yml` para monitorizar los ecosistemas `pip` y `github-actions` semanalmente.
+- **Resultado:** Dependabot abrió automáticamente 4 Pull Requests de actualización (`#18` `sonarqube-scan-action` 7 -> 8, `#19` `actions/checkout` 6 -> 7, `#20` `PyYAML` 6.0.3 -> 6.0.4 y `#21` `Flask` 3.0.0 -> 3.1.3).
+- **Evidencias:** `docs/evidencias/i1-dependabot-settings.png` y `docs/evidencias/i3-dependabot-prs.png`.
+
+## Parte M: Remediación de vulnerabilidades (Issue #6)
+
+- **Secretos hardcodeados y exposición en logs (`app/reporte_auditoria.py`):** Se eliminaron `NOTIFICATION_API_KEY` y `SMTP_PASSWORD` del código fuente sustituyéndolas por variables de entorno (`REPORTAUDIT_NOTIFICATION_API_KEY` y `REPORTAUDIT_SMTP_PASSWORD`) y se eliminó el volcado parcial de la clave en `notificar_cliente`. **Declaración de rotación:** Las credenciales expuestas en commits anteriores (`Rq7Hx2Lm9Xc4Vb8Nz1Kd6Fs3Tg5Wy0Pj2Re4UaBt` y `R3port2024!Audit`) se consideran comprometidas y se declaran revocadas/rotadas.
+- **Deserialización YAML (`cargar_configuracion`):** Sustitución de `yaml.load(..., Loader=yaml.Loader)` por `yaml.safe_load`.
+- **Inyección SQL (`buscar_reportes_cliente`):** Sustitución de concatenación de cadenas por consulta parametrizada (`SELECT * FROM reportes WHERE cliente = ?`).
+- **Inyección de comandos (`convertir_a_pdf`):** Validación estricta por expresión regular (`^[a-zA-Z0-9_-]+\.html$`) lanzando `ValueError` ante caracteres no permitidos y ejecución directa con `subprocess.run(..., shell=False)` sin invocación de shell.
+- **Algoritmo criptográfico débil (`hash_password_legacy`):** Migración de MD5 sin sal a `hashlib.pbkdf2_hmac("sha256", ..., 600_000)` con sal aleatoria de 16 bytes.
+- **Evidencia de verificación:** `docs/evidencias/m-verificacion-remediacion.txt`.
