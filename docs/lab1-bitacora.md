@@ -141,3 +141,11 @@ justificación.
 - **Hallazgo histórico:** `generic-api-key` (`NOTIFICATION_API_KEY`) en `app/reporte_auditoria.py:21` del commit inicial `8fa42f99`.
 - **Estado actual (`HEAD`):** `0` secretos presentes (`gitleaks detect --no-git` limpio tras la remediación en `fd5985d`).
 - **Decisión de respuesta:** Se aplica rotación/revocación de la credencial comprometida en lugar de reescribir el historial público ya auditado, registrando su *fingerprint* en `.gitleaksignore` y añadiendo `gitleaks/gitleaks-action@v2` con `fetch-depth: 0` en `.github/workflows/cadena-suministro.yml` para bloquear cualquier futura exposición en PRs o commits.
+
+## Resumen final de controles y evidencias Antes / Después (Issue #8)
+- **Gobernanza y flujo de trabajo (Issues #1, #15, #16, #17):** Protección de rama `main` con revisión obligatoria de pares, plantillas internacionales de Issues/PR y *Required status checks* activos (`p-required-checks.png`).
+- **Prevención local (Issue #2):** Gate pre-commit con Semgrep SAST & Secrets bloqueando código vulnerable antes del commit.
+- **SAST, SCA y Secretos (Issues #3, #4, #5, #6, #7, #9, #10):**
+  - *Antes:* Inyección SQL, inyección de comandos, deserialización YAML insegura, hash SHA-1 sin sal, secreto hardcodeado (`NOTIFICATION_API_KEY`) y dependencias vulnerables (`Flask 3.0.0`, `PyYAML 6.0.3`, `Jinja2 3.1.2`).
+  - *Después:* Consultas parametrizadas, validación estricta sin `shell=True`, `yaml.safe_load`, `PBKDF2-HMAC-SHA256`, secreto inyectado por entorno y escaneo continuo en CI con CodeQL (`m-codeql-after.png`), SonarQube Cloud (`m-sonarqube-after.png`), Gitleaks en historial completo (`o-gitleaks-ci-pass.png`) y `pip-audit --strict`.
+- **Divulgación, madurez y liberación (Issues #11, #12, #13):** Política de seguridad `SECURITY.md` y canal privado habilitado (`q-private-vuln-reporting.png`), evaluación continua con OpenSSF Scorecard (`r-openssf-scorecard.png`) y Release `v1.0.0` con SBOM CycloneDX y atestación criptográfica de procedencia (`s-release-v1-sbom.png`).
