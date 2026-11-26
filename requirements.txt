@@ -19,7 +19,7 @@ markupsafe==3.0.3
     #   flask
     #   jinja2
     #   werkzeug
-pyyaml==6.0.3
+pyyaml==6.0.4
     # via -r requirements.in
 werkzeug==3.1.9
     # via flask
