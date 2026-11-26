@@ -1,0 +1,23 @@
+[
+ {
+  "RuleID": "generic-api-key",
+  "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+  "StartLine": 21,
+  "EndLine": 21,
+  "StartColumn": 2,
+  "EndColumn": 66,
+  "Match": "NOTIFICATION_API_KEY = \"REDACTED_HISTORICAL_SECRET\"",
+  "Secret": "REDACTED_HISTORICAL_SECRET",
+  "File": "app/reporte_auditoria.py",
+  "SymlinkFile": "",
+  "Commit": "8fa42f9953c9616ac1905657a9453510aecb3549",
+  "Link": "https://github.com/Carlos-Belando/reportaudit-lab/blob/8fa42f9953c9616ac1905657a9453510aecb3549/app/reporte_auditoria.py#L21",
+  "Entropy": 5.171928,
+  "Author": "Carlos Belando",
+  "Email": "cbelando4@alu.ucam.edu",
+  "Date": "2026-09-28T18:30:03Z",
+  "Message": "chore: importar repositorio base de ReportAudit",
+  "Tags": [],
+  "Fingerprint": "8fa42f9953c9616ac1905657a9453510aecb3549:app/reporte_auditoria.py:generic-api-key:21"
+ }
+]
